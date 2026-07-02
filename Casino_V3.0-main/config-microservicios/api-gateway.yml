@@ -1,0 +1,105 @@
+server:
+  port: 8080
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://localhost:8761/eureka/}
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+
+spring:
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: clientes
+              uri: lb://clientes-casino
+              predicates:
+                - Path=/api/v1/clientes/**, /v3/api-docs/clientes
+              filters:
+                - RewritePath=/v3/api-docs/clientes, /v3/api-docs
+
+            - id: cuentas
+              uri: lb://cuentas-casino
+              predicates:
+                - Path=/api/v1/cuentas_clientes/**, /v3/api-docs/cuentas_clientes, Path=/api/v1/cuentas_empleados/**, /v3/api-docs/cuentas_empleados
+              filters:
+                - RewritePath=/v3/api-docs/cuentas_clientes, /v3/api-docs
+                - RewritePath=/v3/api-docs/cuentas_empleados, /v3/api-docs
+
+            - id: deudores
+              uri: lb://deudores-casino
+              predicates:
+                - Path=/api/v1/deudores/**, /v3/api-docs/deudores
+              filters:
+                - RewritePath=/v3/api-docs/deudores, /v3/api-docs
+
+            - id: empleados
+              uri: lb://empleado-casino
+              predicates:
+                - Path=/api/v1/empleados/**, /v3/api-docs/empleados
+              filters:
+                - RewritePath=/v3/api-docs/empleados, /v3/api-docs
+
+            - id: fichas
+              uri: lb://fichas-casino
+              predicates:
+                - Path=/api/v1/fichas/**, /v3/api-docs/fichas
+              filters:
+                - RewritePath=/v3/api-docs/fichas, /v3/api-docs
+
+            - id: juegos
+              uri: lb://juegos-casino
+              predicates:
+                - Path=/api/v1/juegos/**, /v3/api-docs/juegos
+              filters:
+                - RewritePath=/v3/api-docs/juegos, /v3/api-docs
+
+            - id: maquinas
+              uri: lb://maquinas-casino
+              predicates:
+                - Path=/api/v1/maquinas/**, /v3/api-docs/maquinas
+              filters:
+                - RewritePath=/v3/api-docs/maquinas, /v3/api-docs
+
+            - id: mesas
+              uri: lb://mesas-casino
+              predicates:
+                - Path=/api/v1/mesas/**, /v3/api-docs/mesas
+              filters:
+                - RewritePath=/v3/api-docs/mesas, /v3/api-docs
+
+            - id: reportes
+              uri: lb://reportes-casino
+              predicates:
+                - Path=/api/v1/reportes/**, /v3/api-docs/reportes
+              filters:
+                - RewritePath=/v3/api-docs/reportes, /v3/api-docs
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    urls:
+      - name: Clientes
+        url: /v3/api-docs/clientes
+      - name: Cuentas Clientes
+        url: /v3/api-docs/cuentas_clientes
+      - name: Cuentas Empleados
+        url: /v3/api-docs/cuentas_empleados
+      - name: Deudores
+        url: /v3/api-docs/deudores
+      - name: Empleados
+        url: /v3/api-docs/empleados
+      - name: Fichas
+        url: /v3/api-docs/fichas
+      - name: Juegos
+        url: /v3/api-docs/juegos
+      - name: Maquinas
+        url: /v3/api-docs/maquinas
+      - name: Mesas
+        url: /v3/api-docs/mesas
+      - name: Reportes
+        url: /v3/api-docs/reportes
