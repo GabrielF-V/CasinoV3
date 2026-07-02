@@ -1,0 +1,45 @@
+INSERT INTO cuentas_clientes(nom_usuario,contrasena,cliente)
+VALUES ('saiyayin_son','ball4',1),
+       ('hakari_pasion','pasionmylove',2),
+       ('polka_blue','mikuxramon',3),
+       ('ilove_dogs','mamba_negra',4),
+       ('10milmillones_iq','drstone',5),
+       ('dragon_shaoling','shaolingsoccer',6),
+       ('thragg_mercury','quienhisoestadiablura',7),
+       ('kyubi_best','micaminoninja',8),
+       ('kazu_luck','steel',9),
+       ('sr_police','queriaserdelantero',10),
+       ('thorn_princess','mamadeanya',11),
+       ('darkness_paladin','submissive',12),
+       ('gold_teins','islandmistery',13),
+       ('fox_al_vuelo','yiaaah',14),
+       ('gohan_modo_bestia','',15),
+       ('geralt_caza_vacas','geraldtrivia',16),
+       ('arthur_el_bueno','todolobueno',17),
+       ('tf_mano_de_suerte','',18),
+       ('gambit_x','gambitloss',19),
+       ('la_mole','horadepelear',20),
+       ('dante_oh_yeah','danteardiente',21),
+       ('mr_sexo','hate_work',22),
+       ('ladronlegendario','drakeperdido',23),
+       ('bodoquenews','tormentachina',24),
+       ('kiryuilegal','ciberlomasgrande',25),
+       ('skibidiman','sintunoviasnopuedes',26),
+       ('king_casino','justiceneverdie',27),
+       ('gojo_huevo_infinito','negritoojoclaro',28),
+       ('abuela_hokage','maquinagood',29),
+       ('cyborg_tuneado','mejorasseñoresmejoras',30),
+       ('ihate_humans','happyending',31);
+
+
+
+
+INSERT INTO cuentas_empleados(nom_usuario,contrasena,empleado)
+VALUES ('mr_L','betterbrother',1),
+       ('tifa_on_heaven','avalanchareturn',2),
+       ('mentalista_experto','engañarmidon',3),
+       ('montruo_imaginario','abejalibre',4),
+       ('genioprodigio','nomesuperashermano',5),
+       ('hatemetroid','ridleybodrio',6),
+       ('hikuuu','hyuhaggg',7),
+       ('twilight','whitecod',8)
