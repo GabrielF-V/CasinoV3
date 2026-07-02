@@ -1,0 +1,258 @@
+services:
+  mysql-db:
+    image: mysql:8.0
+    container_name: mysql_database
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_database:/var/lib/mysql
+      - ./init-db:/docker-entrypoint-initdb.d
+
+  eureka:
+    restart: always
+    build:
+      context: ./eureka
+      dockerfile: Dockerfile
+    container_name: eureka
+    ports:
+      - "8761:8761"
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka/
+    depends_on:
+      mysql-db:
+        condition: service_started
+
+  config-server:
+    restart: always
+    build:
+      context: ./config-server
+      dockerfile: Dockerfile
+    container_name: config-server
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka/
+      CONFIG_SEARCH_LOCATIONS: file:/config-microservicios
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./config-microservicios:/config-microservicios
+    depends_on:
+      mysql-db:
+        condition: service_started
+      eureka:
+        condition: service_started
+
+  clientes-casino:
+    restart: always
+    build:
+      context: ./clientes-casino
+      dockerfile: Dockerfile
+    container_name: clientes
+
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/bd_clientes
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_CONFIG_IMPORT: configserver:http://config-server:8888
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka/
+    depends_on:
+      mysql-db:
+        condition: service_started
+      eureka:
+        condition: service_started
+      config-server:
+        condition: service_started
+
+  cuentas-casino:
+    restart: always
+    build:
+      context: ./cuentas-casino
+      dockerfile: Dockerfile
+    container_name: cuentas
+
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/bd_cuentas
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_CONFIG_IMPORT: configserver:http://config-server:8888
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka/
+    depends_on:
+      mysql-db:
+        condition: service_started
+      eureka:
+        condition: service_started
+      config-server:
+        condition: service_started
+
+  deudores-casino:
+    restart: always
+    build:
+      context: ./deudores-casino
+      dockerfile: Dockerfile
+    container_name: deudores
+
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/bd_deudores
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_CONFIG_IMPORT: configserver:http://config-server:8888
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka/
+    depends_on:
+      mysql-db:
+        condition: service_started
+      eureka:
+        condition: service_started
+      config-server:
+        condition: service_started
+
+  empleado-casino:
+    restart: always
+    build:
+      context: ./empleado-casino
+      dockerfile: Dockerfile
+    container_name: empleados
+
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/bd_empleados
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_CONFIG_IMPORT: configserver:http://config-server:8888
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka/
+    depends_on:
+      mysql-db:
+        condition: service_started
+      eureka:
+        condition: service_started
+      config-server:
+        condition: service_started
+  
+  fichas-casino:
+    restart: always
+    build:
+      context: ./fichas-casino
+      dockerfile: Dockerfile
+    container_name: fichas
+    
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/bd_fichas
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_CONFIG_IMPORT: configserver:http://config-server:8888
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka/
+    depends_on:
+      mysql-db:
+        condition: service_started
+      eureka:
+        condition: service_started
+      config-server:
+        condition: service_started
+      
+  juegos-casino:
+    restart: always
+    build:
+      context: ./juegos-casino
+      dockerfile: Dockerfile
+    container_name: juegos
+    
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/bd_juegos
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_CONFIG_IMPORT: configserver:http://config-server:8888
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka/
+    depends_on:
+      mysql-db:
+        condition: service_started
+      eureka:
+        condition: service_started
+      config-server:
+        condition: service_started
+      
+  maquinas-casino:
+    restart: always
+    build:
+      context: ./maquinas-casino
+      dockerfile: Dockerfile
+    container_name: maquinas
+    
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/bd_maquinas
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_CONFIG_IMPORT: configserver:http://config-server:8888
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka/
+    depends_on:
+      mysql-db:
+        condition: service_started
+      eureka:
+        condition: service_started
+      config-server:
+        condition: service_started
+  
+  mesas-casino:
+    restart: always
+    build:
+      context: ./mesas-casino
+      dockerfile: Dockerfile
+    container_name: mesas
+
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/bd_mesas
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_CONFIG_IMPORT: configserver:http://config-server:8888
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka/
+    depends_on:
+      mysql-db:
+        condition: service_started
+      eureka:
+        condition: service_started
+      config-server:
+        condition: service_started
+
+  reportes-casino:
+    restart: always
+    build:
+      context: ./reportes-casino
+      dockerfile: Dockerfile
+    container_name: reportes
+
+    environment:
+      SPRING_CONFIG_IMPORT: configserver:http://config-server:8888
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka/
+    depends_on:
+      mysql-db:
+        condition: service_started
+      eureka:
+        condition: service_started
+      config-server:
+        condition: service_started
+
+  api-gateway:
+    restart: always
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    container_name: api-gateway
+
+    ports:
+      - "8080:8080"
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka:8761/eureka/
+      SPRING_CONFIG_IMPORT: configserver:http://config-server:8888
+    depends_on:
+      - config-server
+      - eureka
+      - clientes-casino
+      - cuentas-casino
+      - deudores-casino
+      - empleado-casino
+      - fichas-casino
+      - juegos-casino
+      - maquinas-casino
+      - mesas-casino
+      - reportes-casino
+
+volumes:
+  mysql_database:
